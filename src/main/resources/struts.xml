@@ -6,7 +6,7 @@
 	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
 	<!-- 设置最大上传文件为 10 MB -->
 	<constant name="struts.multipart.maxSize" value="10485760" />
-	<!-- 把主题设为simple -->
+	<!-- 把struts标签主题设为simple -->
 	<constant name="struts.ui.theme" value="simple" />
 	<!-- 设定请求后缀，默认为"action," -->
 	<constant name="struts.action.extension" value="action,do," />
@@ -22,7 +22,7 @@
 				<interceptor-ref name="logInterceptor" />
 				<interceptor-ref name="paramsPrepareParamsStack">
 					<param name="exception.logEnabled">true</param>
-					<param name="exception.logLevel">error</param>
+					<param name="exception.logLevel">debug</param>
 				</interceptor-ref>
 			</interceptor-stack>
 		</interceptors>
