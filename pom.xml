@@ -5,7 +5,7 @@
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<url>http://maven.apache.org</url>
- 
+
 	<!-- 主要依赖库的版本定义 -->
 	<properties>
 		<spring.version>4.0.2.RELEASE</spring.version>
