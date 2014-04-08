@@ -65,5 +65,4 @@ public abstract class BaseAction<T> extends ActionSupport implements ModelDriven
 
 	/** 等同于prepare()的内部函数,供prepardMethodName()函数调用. */
 	protected abstract void prepareModel() throws Exception;
-
 }

@@ -85,23 +85,16 @@ public class UserAction extends BaseAction<User> {
 		return LOGIN;
 	}
 
-	/**
-	 * input页面显示所有角色列表.
-	 */
+	/** input页面显示所有角色列表. */
 	public List<Role> getAllRoleList() {
 		return roleService.findAll();
 	}
 
-	/**
-	 * input页面显示用户拥有的角色.
-	 */
+	/** input页面显示用户拥有的角色. */
 	public List<Long> getCheckedRoleIds() {
 		return checkedRoleIds;
 	}
 
-	/**
-	 * input页面提交用户拥有的角色.
-	 */
 	public void setCheckedRoleIds(List<Long> checkedRoleIds) {
 		this.checkedRoleIds = checkedRoleIds;
 	}

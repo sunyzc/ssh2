@@ -48,23 +48,16 @@ public class RoleAction extends BaseAction<Role> {
 		return TO_LIST;
 	}
 
-	/**
-	 * input页面显示所有权限列表.
-	 */
+	/** input页面显示所有权限列表. */
 	public List<Authority> getAllAuthorityList() {
 		return authorityService.findAll();
 	}
 
-	/**
-	 * input页面显示角色拥有的权限.
-	 */
+	/** input页面显示角色拥有的权限. */
 	public List<Long> getCheckedAuthorityIds() {
 		return checkedAuthorityIds;
 	}
 
-	/**
-	 * input页面提交角色拥有的权限.
-	 */
 	public void setCheckedAuthorityIds(List<Long> checkedAuthorityIds) {
 		this.checkedAuthorityIds = checkedAuthorityIds;
 	}
