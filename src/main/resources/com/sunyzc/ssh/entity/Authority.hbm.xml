@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.sunyzc.ssh.entity.Authority" table="AUTHORITY">
+		<id name="id" type="java.lang.Long">
+			<column name="ID" />
+			<generator class="identity" />
+		</id>
+		<property name="authorityName" length="32" type="java.lang.String">
+			<column name="AUTHORITY_NAME" length="32" not-null="true" unique="true" />
+		</property>
+		<many-to-one name="parent" class="com.sunyzc.ssh.entity.Authority" column="PARENT_ID" />
+		<property name="description" type="java.lang.String">
+			<column name="DESCRIPTION" length="255" />
+		</property>
+		<set name="children">
+			<key column="PARENT_ID" />
+			<one-to-many class="com.sunyzc.ssh.entity.Authority" />
+		</set>
+		<set name="roles" table="ROLE_AUTHORITY">
+			<key column="AUTHORITY_ID" />
+			<many-to-many class="com.sunyzc.ssh.entity.Role" column="ROLE_ID" />
+		</set>
+		<set name="resources" table="AUTHORITY_RESOURCE">
+			<key column="AUTHORITY_ID" />
+			<one-to-many class="com.sunyzc.ssh.entity.Resource" />
+		</set>
+	</class>
+</hibernate-mapping>

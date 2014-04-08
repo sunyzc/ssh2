@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.sunyzc.ssh.entity.Resource" table="RESOURCE">
+		<id name="id" type="java.lang.Long">
+			<column name="ID" />
+			<generator class="identity" />
+		</id>
+		<property name="actionPath" length="32" type="java.lang.String">
+			<column name="ACTION_PATH" length="32" />
+		</property>
+		<property name="resourceName" length="32" type="java.lang.String">
+			<column name="RESOURCE_NAME" length="32" />
+		</property>
+		<property name="description" type="java.lang.String">
+			<column name="DESCRIPTION" length="255" />
+		</property>
+		<many-to-one name="authority" class="com.sunyzc.ssh.entity.Authority" column="AUTHORITY_ID" />
+	</class>
+</hibernate-mapping>

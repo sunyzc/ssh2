@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.sunyzc.ssh.entity.Role" table="ROLE">
+		<id name="id" type="java.lang.Long">
+			<column name="ID" />
+			<generator class="identity" />
+		</id>
+		<property name="roleName" length="32" type="java.lang.String">
+			<column name="ROLE_NAME" length="32" not-null="true" unique="true" />
+		</property>
+		<property name="createDate" type="java.util.Date">
+			<column name="CREATE_DATE" />
+		</property>
+		<property name="updateDate" type="java.util.Date">
+			<column name="UPDATE_DATE" />
+		</property>
+		<property name="description" type="java.lang.String">
+			<column name="DESCRIPTION" length="255" />
+		</property>
+		<set name="users" table="USER_ROLE">
+			<key column="ROLE_ID" />
+			<many-to-many class="com.sunyzc.ssh.entity.User" column="USER_ID" />
+		</set>
+		<set name="authorities" table="ROLE_AUTHORITY">
+			<key column="ROLE_ID" />
+			<many-to-many class="com.sunyzc.ssh.entity.Authority" column="AUTHORITY_ID" />
+		</set>
+	</class>
+</hibernate-mapping>

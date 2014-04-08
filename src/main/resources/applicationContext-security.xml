@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:s="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	        			http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	        			http://www.springframework.org/schema/security
+	        			http://www.springframework.org/schema/security/spring-security-3.2.xsd"
+	default-lazy-init="true">
+	<description>Spring Security Configuration</description>
+
+	<!-- Http安全配置 -->
+	<s:http pattern="/css/**" security="none" />
+	<s:http pattern="/images/**" security="none" />
+	<s:http pattern="/js/**" security="none" />
+	<s:http auto-config="true" use-expressions="true">
+		<s:remember-me />
+		<s:intercept-url pattern="/home" access="isAuthenticated()" />
+		<!-- User -->
+		<s:intercept-url pattern="/user!save*" access="hasAnyRole('EditUser')" />
+		<s:intercept-url pattern="/user!delete*" access="hasAnyRole('EditUser')" />
+		<s:intercept-url pattern="/user*" access="hasAnyRole('ViewUser')" />
+		<!-- Role -->
+		<s:intercept-url pattern="/role!save*" access="hasAnyRole('EditRole')" />
+		<s:intercept-url pattern="/role!delete*" access="hasAnyRole('EditRole')" />
+		<s:intercept-url pattern="/role*" access="hasAnyRole('ViewRole')" />
+
+		<s:form-login login-page="/login" default-target-url="/home" authentication-failure-url="/login?error=true" />
+		<s:logout logout-success-url="/" />
+	</s:http>
+
+	<!-- 认证配置, 使用userDetailsService提供的用户信息 -->
+	<s:authentication-manager alias="authenticationManager">
+		<s:authentication-provider user-service-ref="userDetailsService">
+			<!-- <s:password-encoder hash="plaintext" /> -->
+			<s:password-encoder hash="md5">
+				<s:salt-source user-property="username" />
+			</s:password-encoder>
+		</s:authentication-provider>
+	</s:authentication-manager>
+
+	<!-- 实现的用户查询服务 -->
+	<bean id="userDetailsService" class="com.sunyzc.ssh.service.impl.UserDetailsServiceImpl">
+		<property name="userDao" ref="userDao" />
+	</bean>
+</beans>

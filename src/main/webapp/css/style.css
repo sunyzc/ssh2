@@ -1,0 +1,159 @@
+/* global */
+th, td {border-color: #999;}
+
+table.noborder th, table.noborder td {border: none;}
+
+.error,.success    { padding: .5em; margin-bottom: 1em; margin-top: 1em; border: 2px solid #ddd; }
+.error      { background: #FBE3E4; color: #8a1f11; border-color: #FBC2C4; }
+.success    { background: #E6EFC2; color: #264409; border-color: #C6D880; }
+.error a    { color: #8a1f11; }
+.success a  { color: #264409; }
+
+/* form */
+input[type=text], input[type=password], textarea, select {
+  background-color:#fff;
+  border:1px solid #bbb;
+  padding:2px;
+}
+input[type=text]:focus, input[type=password]:focus, textarea:focus, select:focus {
+  border-color:#666;
+}
+
+/* header */
+#title h1 {
+	font-size: 153.9%;
+	letter-spacing: .1em;
+	margin:0.5em  0;
+}
+#title h2 {
+	color: #999;
+	letter-spacing: .1em;
+	margin:0.5em 0;
+}
+/* body */
+#filter,#content {margin-top:1em;}
+/* footer */
+#ft {
+	margin-top: 15px;
+	padding: 15px 0px 0px 0px;
+	font-size: 95%;
+	text-align: center;
+	border-top: 2px solid #658A16;
+}
+#ft a {color: #999;}
+
+
+
+
+
+#menu, #menu ul {
+	margin:0 0 0 0;
+	padding: 0.5em;
+	font-weight: bold;
+	color: #fff;
+	background: #BACE87;
+	height: 16px;
+	border-top: 2px solid #658A16;
+	border-bottom: 2px solid #658A16;
+}
+#menu li {
+	float: left;
+	height: 16px;
+	display: block;
+	position: relative;
+	border-right: #ffffff 1px solid;
+}
+#menu ul { 
+	display: none;
+	/*position: absolute;*/
+	height: auto;
+	margin-top: 0.5em;
+	padding: 0;
+}
+#menu li:hover ul {
+	display: block;
+}
+#menu ul li {
+	float: none;
+	height: 16px;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	display: block;
+	position: relative;
+	border-right: none;
+	border-top: #ffffff 1px dotted;
+}
+#menu ul li:hover {
+	background: #658A16;
+}
+#menu a {
+	padding: 0.5em;
+	text-decoration: none;
+	color: #fff;
+}
+#menu a:hover {
+	background: #658A16;
+}
+#menu .active {
+	background: #658A16;
+}
+.current{
+  color:#658A88;
+  background:#D42524;
+}
+
+#contentTable{
+	margin-left: auto;
+	margin-right: auto;
+}
+#contentTable table {
+	margin: 0px auto;
+	font-size: 12px;
+	color: #333333;
+	border-collapse: collapse; /*细线表格*/
+}
+#contentTable table th {
+	line-height: 18px;
+	height: 18px;
+	text-align: center;
+}
+#contentTable table td {
+	border: 1px solid #999; /*细线条颜色*/
+	height: 15px;
+}
+/*
+#contentTable table tr.oddRow td {
+	background-color: #fff;
+}
+#contentTable table tr.evenRow td {
+	background-color: #eee;
+}
+#contentTable table tr:hover td {
+	background-color: #ccc;
+}
+*/
+#contentTable tr.oddRow td {
+	background-color: #fff;
+} /* 交替行奇数行的背景色 */
+#contentTable tr.evenRow td {
+	background-color: #eee;
+} /* 交替行偶数行的背景色 */
+#contentTable tr:hover td {
+	background-color: #ccc;
+} /* 鼠标经过时的背景色 */
+table th,tfoot tr td {
+	font-weight: bold;
+	background: #c5c5c5;
+}
+
+a {
+	color: #112299;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+a:active {
+	color: #000000;
+}
+

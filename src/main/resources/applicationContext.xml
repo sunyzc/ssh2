@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop    
+	        			http://www.springframework.org/schema/aop/spring-aop-4.0.xsd   
+						http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx-4.0.xsd 
+						http://www.springframework.org/schema/jee 
+						http://www.springframework.org/schema/jee/spring-jee-4.0.xsd 
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context-4.0.xsd"
+	default-lazy-init="false">
+
+	<description>Spring Common Configuration</description>
+
+	<!-- 定义受环境影响易变的变量 -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="locations">
+			<list>
+				<!-- 标准配置 -->
+				<value>classpath*:/application.properties</value>
+				<!-- 集群中节点配置 -->
+				<value>classpath*:/application.cluster.properties</value>
+				<!-- 本地开发环境配置 -->
+				<value>classpath*:/application.local.properties</value>
+				<!-- 服务器生产环境配置 <value>file:/var/xpress/application.server.properties</value> -->
+			</list>
+		</property>
+	</bean>
+
+	<!-- 配置c3p0数据源。 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<!-- 设置连接具体数据库的jdbc驱动类。 -->
+		<property name="driverClass" value="${jdbc.driver}" />
+		<!-- 设置连接具体数据库的jdbcUrl。 -->
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<!-- 设置连接具体数据库的用户名。 -->
+		<property name="user" value="${jdbc.username}" />
+		<!-- 设置连接具体数据库的用户名对应的密码。 -->
+		<property name="password" value="${jdbc.password}" />
+		<!-- 设置连接池的最小连接数 -->
+		<property name="minPoolSize" value="${dcp.c3p0.minPoolSize}" />
+		<!-- 设置连接池的最大连接数 -->
+		<property name="maxPoolSize" value="${dcp.c3p0.maxPoolSize}" />
+		<!-- 设置连接池的初始连接数。注意，其值必须在minPoolSize和maxPoolSize的值之间。 -->
+		<property name="initialPoolSize" value="${dcp.c3p0.initialPoolSize}" />
+		<!-- 设置连接池连接的最大空闲时间，若该事件内未使用则空闲连接被丢弃。若设置为0则表示永不丢弃，默认 为0。 -->
+		<property name="maxIdleTime" value="${dcp.c3p0.maxIdleTime}" />
+		<!-- 设置检查连接池中的所有空闲连接的时间间隔（秒），这将确保使用的每个connection都是有效的。其默认值为0。 -->
+		<property name="idleConnectionTestPeriod" value="${dcp.c3p0.idleConnectionTestPeriod}" />
+		<!-- 设置当连接池中的连接用完的时候c3p0一次同时获取的连接数。其默认值为3。 -->
+		<property name="acquireIncrement" value="${dcp.c3p0.acquireIncrement}" />
+	</bean>
+
+	<!-- 配置SessionFactory。 -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="namingStrategy">
+			<bean class="org.hibernate.cfg.ImprovedNamingStrategy" />
+		</property>
+		<!-- 配置Hibernate的一些属性。 -->
+		<property name="hibernateProperties">
+			<props>
+				<!-- 设置Hibernate的数据库方言类。 -->
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<!-- 设置Hibernate是否依据model实体类自动创建或同步数据库表结构。 -->
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+				<!-- 设置JDBC的Statement读取数据的时候每次从数据库中取出的记录数。其值设的越大，表示读数据库的次 数越少，速度越快，一次取出的记录数也越多。 -->
+				<prop key="hibernate.jdbc.fetch_size">${hibernate.jdbc.fetch_size}</prop>
+				<!-- 设置对数据库进行批量删除，批量更新和批量插入的时候的批次大小。其值设的越大，则批量操作时向数据 库发送sql的次数越少，速度就越快。推荐取值范围为5~30。 -->
+				<prop key="hibernate.jdbc.batch_size">${hibernate.jdbc.batch_size}</prop>
+				<prop key="hibernate.temp.use_jdbc_metadata_defaults">${hibernate.temp.use_jdbc_metadata_defaults}</prop>
+				<!-- 设置显示最终执行的SQL。 -->
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<!-- 设置格式化显示出来的最终执行的SQL。 -->
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+				<!-- 设置Hibernate为SQL产生注释，这样更利于调试。默认值为false，取值为true|false。 -->
+				<prop key="hibernate.use_sql_comments">${hibernate.use_sql_comments}</prop>
+				<!-- 以下设置Hibernate的二级缓存。 -->
+				<!-- 开启Hibernate二级缓存。 -->
+				<prop key="hibernate.cache.use_second_level_cache">${hibernate.cache.use_second_level_cache}</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>com/sunyzc/ssh/entity/User.hbm.xml</value>
+				<value>com/sunyzc/ssh/entity/Role.hbm.xml</value>
+				<value>com/sunyzc/ssh/entity/Authority.hbm.xml</value>
+				<value>com/sunyzc/ssh/entity/Resource.hbm.xml</value>
+				<value>com/sunyzc/ssh/entity/Log.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Dao -->
+	<bean id="baseDao" class="com.sunyzc.ssh.dao.impl.BaseDaoImpl" abstract="true">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="userDao" class="com.sunyzc.ssh.dao.impl.UserDaoImpl" parent="baseDao" />
+	<bean id="roleDao" class="com.sunyzc.ssh.dao.impl.RoleDaoImpl" parent="baseDao" />
+	<bean id="authorityDao" class="com.sunyzc.ssh.dao.impl.AuthorityDaoImpl" parent="baseDao" />
+	<bean id="resourceDao" class="com.sunyzc.ssh.dao.impl.ResourceDaoImpl" parent="baseDao" />
+	<bean id="logDao" class="com.sunyzc.ssh.dao.impl.LogDaoImpl" parent="baseDao" />
+
+	<!-- Service -->
+	<bean id="dataInitialService" class="com.sunyzc.ssh.service.DataInitialService">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="userService" class="com.sunyzc.ssh.service.impl.UserServiceImpl">
+		<property name="userDao" ref="userDao" />
+	</bean>
+	<bean id="roleService" class="com.sunyzc.ssh.service.impl.RoleServiceImpl">
+		<property name="roleDao" ref="roleDao" />
+	</bean>
+	<bean id="authorityService" class="com.sunyzc.ssh.service.impl.AuthorityServiceImpl">
+		<property name="authorityDao" ref="authorityDao" />
+	</bean>
+	<bean id="resourceService" class="com.sunyzc.ssh.service.impl.ResourceServiceImpl">
+		<property name="resourceDao" ref="resourceDao" />
+	</bean>
+	<bean id="logService" class="com.sunyzc.ssh.service.impl.LogServiceImpl">
+		<property name="logDao" ref="logDao" />
+	</bean>
+
+	<!-- Action -->
+	<bean id="userAction" class="com.sunyzc.ssh.action.UserAction" scope="prototype">
+		<property name="userService" ref="userService" />
+		<property name="roleService" ref="roleService" />
+	</bean>
+	<bean id="roleAction" class="com.sunyzc.ssh.action.RoleAction" scope="prototype">
+		<property name="roleService" ref="roleService" />
+		<property name="authorityService" ref="authorityService" />
+	</bean>
+
+	<!-- Others -->
+	<bean id="logInterceptor" class="com.sunyzc.ssh.interceptor.LogInterceptor">
+		<property name="logService" ref="logService" />
+		<property name="resourceService" ref="resourceService" />
+	</bean>
+
+	<!-- 配置事务管理器，单数据源事务 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- 使用annotation定义事务 -->
+	<!-- <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" /> -->
+	<!-- 配置事务传播特性 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+	<!-- 配置参与事务的类和方法 -->
+	<aop:config>
+		<aop:pointcut id="allServiceMethod" expression="execution(* com.sunyzc.ssh.service.*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="allServiceMethod" />
+	</aop:config>
+</beans>
