@@ -102,7 +102,7 @@ public class DataInitialService {
 		// Add users
 		User user_Admin = new User("admin", "admin", "系统管理员", "admin@163.com", true, new Date(), new Date(), "初始化账户：系统管理员");
 		user_Admin.getRoles().add(role_Admin);
-		User user_User = new User("user", "admin", "普通用户", "user@163.com", true, new Date(), new Date(), "初始化账户：普通用户");
+		User user_User = new User("user", "user", "普通用户", "user@163.com", true, new Date(), new Date(), "初始化账户：普通用户");
 		session.save(user_Admin);
 		session.save(user_User);
 	}
