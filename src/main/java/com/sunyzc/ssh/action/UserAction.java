@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.Cookie;
+
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -77,11 +79,21 @@ public class UserAction extends BaseAction<User> {
 						allGrantedActionPaths.add(resource.getActionPath());
 		ActionContext.getContext().getSession().put(SysConstants.USER_IN_SESSION, user);
 		ActionContext.getContext().getSession().put(SysConstants.ALL_AUTHORISED_ACTION_PATHS, allGrantedActionPaths);
+		// 记录cookie
+		// Cookie cookie = new Cookie(SysConstants.COOKIE_FOR_LOGIN_INFO, model.getLoginName() + "|" + model.getPassword());//TODO 以后加密
+		// cookie.setMaxAge(14 * 24 * 60 * 60);// 设置Cookie的过期时间为2周
+		// cookie.setPath(ServletActionContext.getServletContext().getContextPath());
+		// ServletActionContext.getResponse().addCookie(cookie);
 		return HOME;
 	}
 
 	public String logout() throws Exception {
+		// 销毁session
 		ServletActionContext.getRequest().getSession().invalidate();
+		// 清除cookie
+		Cookie cookie = new Cookie(SysConstants.COOKIE_FOR_LOGIN_INFO, null);
+		cookie.setMaxAge(0);
+		ServletActionContext.getResponse().addCookie(cookie);
 		return LOGIN;
 	}
 

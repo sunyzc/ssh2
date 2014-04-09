@@ -12,6 +12,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class Test {
+	/** 发送邮件的最少代码Demo */
 	public static void main(String[] args) throws MessagingException {
 		Properties props = new Properties();
 		props.put("mail.smtp.host", "smtp.163.com");

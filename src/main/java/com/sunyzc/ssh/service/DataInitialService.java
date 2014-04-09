@@ -53,9 +53,9 @@ public class DataInitialService {
 
 		// Add authorities
 		Authority authority_SystemManage = new Authority("系统管理", null);
-		Authority authority_UserManage = new Authority("用户管理", null);
-		Authority authority_RoleManage = new Authority("角色管理", null);
-		Authority authority_LogManage = new Authority("日志管理", null);
+		Authority authority_UserManage = new Authority("用户管理", authority_SystemManage);
+		Authority authority_RoleManage = new Authority("角色管理", authority_SystemManage);
+		Authority authority_LogManage = new Authority("日志管理", authority_SystemManage);
 		Authority authority_UserList = new Authority("用户列表", authority_UserManage);
 		authority_UserList.getResources().add(user_execute);
 		authority_UserList.getResources().add(user_list);
