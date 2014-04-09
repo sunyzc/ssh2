@@ -22,7 +22,7 @@
 				<interceptor-ref name="logInterceptor" />
 				<interceptor-ref name="paramsPrepareParamsStack">
 					<param name="exception.logEnabled">true</param>
-					<param name="exception.logLevel">debug</param>
+					<param name="exception.logLevel">error</param>
 				</interceptor-ref>
 			</interceptor-stack>
 		</interceptors>
@@ -32,7 +32,12 @@
 			<result name="home">/WEB-INF/jsp/home.jsp</result>
 			<result name="error">/WEB-INF/jsp/error.jsp</result>
 		</global-results>
-
+		<action name="login" class="loginAction">
+			<result name="image" type="stream">
+				<param name="contentType">image/jpeg</param>
+				<param name="inputName">inputStream</param>
+			</result>
+		</action>
 		<action name="user" class="userAction">
 			<result name="success">/WEB-INF/jsp/account/user.jsp</result>
 			<result name="input">/WEB-INF/jsp/account/user-input.jsp</result>

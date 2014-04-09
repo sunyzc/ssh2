@@ -127,6 +127,9 @@
 	</bean>
 
 	<!-- Action -->
+	<bean id="loginAction" class="com.sunyzc.ssh.action.LoginAction" scope="prototype">
+		<property name="userService" ref="userService" />
+	</bean>
 	<bean id="userAction" class="com.sunyzc.ssh.action.UserAction" scope="prototype">
 		<property name="userService" ref="userService" />
 		<property name="roleService" ref="roleService" />

@@ -20,9 +20,10 @@ public class AuthorityInterceptor extends AbstractInterceptor {
 		// List<String> allActionPaths = (List<String>) ActionContext.getContext().getApplication().get(SysConstants.ALL_ACTION_PATHS);
 		// if (!allActionPaths.contains(currentActionPath))
 		// return invocation.invoke();
-		if (SysConstants.ACTION_PATH_LOGIN.equals(currentActionPath) || SysConstants.ACTION_PATH_LOGOUT.equals(currentActionPath)) {
+		// if (SysConstants.ACTION_PATH_LOGIN.equals(currentActionPath) || SysConstants.ACTION_PATH_LOGOUT.equals(currentActionPath))
+		if (currentActionPath.startsWith(SysConstants.ACTION_LOGIN_PREFIX))
 			return invocation.invoke();
-		} else {
+		else {
 			Set<String> allGrantedActionPaths = (Set<String>) ActionContext.getContext().getSession().get(SysConstants.ALL_AUTHORISED_ACTION_PATHS);
 			if (allGrantedActionPaths != null && allGrantedActionPaths.contains(currentActionPath))
 				return invocation.invoke();
