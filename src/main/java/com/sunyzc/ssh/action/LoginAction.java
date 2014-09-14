@@ -44,7 +44,7 @@ public class LoginAction extends ActionSupport {
 	public String login() throws Exception {
 		Map<String, Object> session = ActionContext.getContext().getSession();
 		String code = (String) session.get(SysConstants.SESSION_SECURITY_CODE);
-		if (verificationCode == null || verificationCode.equals("") || !verificationCode.equalsIgnoreCase(code)) {
+		if (code != null && !code.equalsIgnoreCase(verificationCode)) {
 			addActionError("Verification code is incorrect");
 			return LOGIN;
 		}

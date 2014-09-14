@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.sunyzc.maven</groupId>
-	<artifactId>ssh2</artifactId>
+	<groupId>com.sunyzc</groupId>
+	<artifactId>ssh</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<url>http://maven.apache.org</url>
 
 	<!-- 主要依赖库的版本定义 -->
 	<properties>
-		<spring.version>4.0.2.RELEASE</spring.version>
-		<hibernate.version>4.3.4.Final</hibernate.version>
-		<struts2.version>2.3.16.1</struts2.version>
-		<aspectj.version>1.7.4</aspectj.version>
-		<mysql.version>5.1.29</mysql.version>
+		<spring.version>4.1.0.RELEASE</spring.version>
+		<hibernate.version>4.3.6.Final</hibernate.version>
+		<struts2.version>2.3.16.3</struts2.version>
+		<aspectj.version>1.8.2</aspectj.version>
+		<shiro.version>1.2.3</shiro.version>
+		<mysql.version>5.1.32</mysql.version>
 		<c3p0.version>0.9.1.2</c3p0.version>
-		<slf4j.version>1.7.6</slf4j.version>
+		<slf4j.version>1.7.7</slf4j.version>
 		<javax.mail.version>1.4.7</javax.mail.version>
 	</properties>
 
@@ -77,8 +79,10 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
-		<!-- <dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-annotations</artifactId> <version>${hibernate.version}</version> </dependency> -->
-		<!-- <dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-ehcache</artifactId> <version>${hibernate.version}</version> </dependency> -->
+		<!-- <dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-annotations</artifactId> 
+			<version>${hibernate.version}</version> </dependency> -->
+		<!-- <dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-ehcache</artifactId> 
+			<version>${hibernate.version}</version> </dependency> -->
 
 		<!-- struts2 -->
 		<dependency>
@@ -97,11 +101,29 @@
 			<artifactId>struts2-dojo-plugin</artifactId>
 			<version>${struts2.version}</version>
 		</dependency>
-		<!-- <dependency> <groupId>org.apache.struts</groupId> <artifactId>struts2-convention-plugin</artifactId> <version>2.3.16.1</version> </dependency> -->
+		<!-- <dependency> <groupId>org.apache.struts</groupId> <artifactId>struts2-convention-plugin</artifactId> 
+			<version>2.3.16.1</version> </dependency> -->
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-spring-plugin</artifactId>
 			<version>${struts2.version}</version>
+		</dependency>
+
+		<!-- Shiro -->
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-core</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-web</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring</artifactId>
+			<version>${shiro.version}</version>
 		</dependency>
 
 		<dependency>
@@ -143,6 +165,23 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>ssh2</finalName>
+		<finalName>ssh</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 </project>
